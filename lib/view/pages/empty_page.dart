@@ -9,7 +9,6 @@ class EmptyPage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: const [
             Text(
               'Oops.. Page Not Found',

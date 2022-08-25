@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:frocrypto/data/repositories/coin_repository.dart';
 import 'package:frocrypto/assets/constants.dart';
+import 'package:frocrypto/view/pages/empty_page.dart';
 
 import '../../data/model/coin_model.dart';
 import '../widgets/coin_card_widget.dart';
@@ -15,21 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Coin> listCoin = [];
-  CoinRepository coinRepository = CoinRepository();
-
-  getData() async {
-    listCoin = await coinRepository.getData();
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    getData();
-    Timer.periodic(const Duration(seconds: 10), (timer) => getData());
-    super.initState();
+  updateList() {
+    setState(() {});
   }
 
   @override
@@ -46,23 +34,47 @@ class _HomePageState extends State<HomePage> {
                 style: kTitleTextStyle,
               ),
               const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: listCoin.length,
-                  itemBuilder: (context, index) {
-                    // final listCoins = listCoin[index];
-                    return CoinCard(
-                      name: listCoin[index].name,
-                      symbol: listCoin[index].symbol,
-                      urlImage: listCoin[index].urlImage,
-                      price: listCoin[index].price.toDouble(),
-                      changeInPercentage:
-                          listCoin[index].changeInPercentage.toDouble(),
-                    );
-                  },
-                ),
-              )
+              StreamBuilder<List<CoinModel>>(
+                stream: CoinRepository.getCoinAPI(),
+                // initialData: initialData,
+                builder: (context, AsyncSnapshot<List<CoinModel>> snapshot) {
+                  final users = snapshot.data;
+
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const Expanded(
+                          child: Center(child: CircularProgressIndicator()));
+                    default:
+                      if (snapshot.hasError) {
+                        debugPrint(snapshot.error.toString());
+                        return const Expanded(child: EmptyPage());
+                      } else {
+                        return Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              await Future.delayed(const Duration(seconds: 2));
+                              updateList();
+                            },
+                            child: ListView.builder(
+                              itemCount: users!.length,
+                              itemBuilder: (context, index) {
+                                final user = users[index];
+                                return CoinCard(
+                                  name: user.name,
+                                  symbol: user.symbol,
+                                  urlImage: user.urlImage,
+                                  price: user.price.toDouble(),
+                                  changeInPercentage:
+                                      user.changeInPercentage.toDouble(),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                  }
+                },
+              ),
             ],
           ),
         ),

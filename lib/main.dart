@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frocrypto/view/pages/empty_page.dart';
 import 'package:frocrypto/view/pages/navigation_page.dart';
 
 void main() async {

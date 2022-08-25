@@ -44,7 +44,10 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screenOption[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _screenOption,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: _itemsBar,
         currentIndex: _selectedIndex,

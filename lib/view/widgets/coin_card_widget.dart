@@ -12,7 +12,6 @@ class CoinCard extends StatelessWidget {
     required this.changeInPercentage,
   }) : super(key: key);
 
-  // final Coin cryptoList;
   final String name;
   final String symbol;
   final String urlImage;
@@ -54,7 +53,7 @@ class CoinCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    price.toDouble().toString(),
+                    '\$${price.toDouble()}',
                     style: kCryptoTextStyle,
                   ),
                   Text(

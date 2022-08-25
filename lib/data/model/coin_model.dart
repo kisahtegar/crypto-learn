@@ -1,11 +1,11 @@
-class Coin {
+class CoinModel {
   final String name;
   final String symbol;
   final String urlImage;
   final num price;
   final num changeInPercentage;
 
-  const Coin({
+  const CoinModel({
     required this.name,
     required this.symbol,
     required this.urlImage,
@@ -13,8 +13,8 @@ class Coin {
     required this.changeInPercentage,
   });
 
-  factory Coin.fromJson(Map<String, dynamic> json) {
-    return Coin(
+  factory CoinModel.fromJson(json) {
+    return CoinModel(
       name: json['name'],
       symbol: json['symbol'],
       urlImage: json['image'],
@@ -22,12 +22,4 @@ class Coin {
       changeInPercentage: json['price_change_percentage_24h'],
     );
   }
-
-  // static Coin fromJson(json) => Coin(
-  //       name: json['name'],
-  //       symbol: json['symbol'],
-  //       urlImage: json['image'],
-  //       price: json['current_price'],
-  //       changeInPercentage: json['price_change_percentage_24h'],
-  //     );
 }
