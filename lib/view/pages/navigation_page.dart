@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frocrypto/view/pages/empty_page.dart';
-import 'package:frocrypto/view/pages/home_page.dart';
-import 'package:frocrypto/view/pages/learn_page.dart';
-import 'package:frocrypto/view/pages/setting_page.dart';
+import 'package:frocrypto/view/pages/markets_page.dart';
+import 'package:frocrypto/view/pages/learns_page.dart';
+import 'package:frocrypto/view/pages/settings_page.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -16,22 +15,22 @@ class _NavigationPageState extends State<NavigationPage> {
 
   final _screenOption = [
     const HomePage(),
-    const EmptyPage(),
-    const EmptyPage(),
+    const LearnPage(),
+    const SettingPage(),
   ];
 
   final _itemsBar = const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
+      icon: Icon(Icons.stacked_line_chart),
+      label: 'Markets',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.menu_book_rounded),
-      label: 'Learn',
+      label: 'Learns',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
-      label: 'Setting',
+      label: 'Settings',
     ),
   ];
 
@@ -48,11 +47,16 @@ class _NavigationPageState extends State<NavigationPage> {
         index: _selectedIndex,
         children: _screenOption,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: _itemsBar,
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        child: BottomNavigationBar(
+          selectedFontSize: 12.0,
+          iconSize: 20,
+          items: _itemsBar,
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.black,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
